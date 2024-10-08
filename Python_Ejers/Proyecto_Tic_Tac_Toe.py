@@ -10,6 +10,8 @@ MAQUINA="O"
 VICTORIA_JUGADOR=termcolor.colored(JUGADOR, 'red')
 VICTORIA_MAQUINA=termcolor.colored(MAQUINA, 'blue')
 
+
+
 def turno():
     moneda=["cara","cruz"]
     lanzar=random.choice(moneda)
@@ -234,10 +236,15 @@ def jugada_optima():
             case 6: # Vamos segundos y es nuestro segundo turno
                 optimo=random.choice(list(set(celdas_libres).intersection(aristas))) # En este caso el empate esta practicamente garantizado, un lado es un poco mejor en este caso.
             case 5: #Vamos primeros y es nuestro tercer turno
-                print("hehe")
-                exit()
-
-                
+                # Sin condiciones de victoria ni derrota el centro siempre está libre
+                optimo='5'
+            case 4: # Vamos segundos y es nuestro tercer turno
+                #el jugador no ha creado diagona XOX, con esquinas ya no es posible ganar con esquinas
+                optimo=random.choice(list(set(celdas_libres).intersection(aristas)))
+            case _: # no hay caso con 3 casillas que no tenga win_cons ni loose_cons
+                    # caso 2 y 1 se pueden resolver con azar
+                optimo=random.choice(celdas_libres)
+            
                 
     return optimo  
 
