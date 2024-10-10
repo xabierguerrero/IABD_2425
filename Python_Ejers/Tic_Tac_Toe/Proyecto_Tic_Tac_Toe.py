@@ -1,6 +1,7 @@
 import random
 import termcolor
 
+
 celdas_global=[['1','2','3'],['4','5','6'],['7','8','9']]
 POSICIONES=[['1','2','3'],['4','5','6'],['7','8','9']]
 
@@ -130,7 +131,6 @@ def jugada_optima():
 
     elif len(check_con(False))>0:
         optimo=random.choice(check_con(False))
-
     else:
         match len(celdas_libres):
             case 9: #Si el tablero esta vacio la jugada optima es cualquiera de las esquinas
