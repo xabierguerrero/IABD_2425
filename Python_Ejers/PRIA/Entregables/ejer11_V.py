@@ -2,7 +2,8 @@ import pandas as pd
 import numpy as np
 import matplotlib as plt
 
-def ejer_1():
+#este es a su vez el ejercicio 1
+def dataframe_numeros():
     data={"x":[],"y":[]}
     for i in range(15):
         data["x"].append(np.random.normal())
@@ -12,35 +13,8 @@ def ejer_1():
     #print(points)
     return puntos
 
-def ejer_2():
-    puntos=ejer_1()
-    x_pos= puntos.loc[puntos["x"]>0] 
-    print(x_pos)       
-
-def ejer_3():
-    puntos=ejer_1()
-    y_pos= puntos.loc[puntos["y"]>0] 
-    print(y_pos)       
-
-def ejer_4():
-    puntos=ejer_1()
-    cuad_1= puntos.loc[puntos["y"]>0].loc[puntos["x"]>0]
-    print(cuad_1)       
-
-def ejer_5():
-    puntos=ejer_1()
-    valores=[]
-    
-    for punto in puntos.itertuples():
-        if punto[1]>0 and punto[2]>0:
-            valores.append(True)
-        else:
-            valores.append(False)
-        
-    puntos.insert(loc=2,column="Primer_Cuadrante",value=valores)
-    print(puntos)
-
-def ejer_6():
+# este es a su vez el ejercicio 6
+def dataframe_palabras():
     vocales=["a","e","i","o","u"]
     cont_vocal=0
     cont_cons=0
@@ -71,28 +45,85 @@ def ejer_6():
         cont_vocal=0
 
     palabras=pd.DataFrame(data=data)
-    #print(palabras)
     return palabras
 
+def dataframe_pisos():
+    fotocasa_df = pd.read_csv("https://drive.google.com/uc?export=view&id=1DwvALe87aeDzTk7s6xGPDd6itJ65s4YE", index_col = 0)
+    return fotocasa_df
+
+
+def ejer_2():
+    puntos=dataframe_numeros()
+    x_pos= puntos.loc[puntos["x"]>0] 
+    print(x_pos)       
+
+def ejer_3():
+    puntos=dataframe_numeros()
+    y_pos= puntos.loc[puntos["y"]>0] 
+    print(y_pos)       
+
+def ejer_4():
+    puntos=dataframe_numeros()
+    cuad_1= puntos.loc[puntos["y"]>0].loc[puntos["x"]>0]
+    print(cuad_1)       
+
+def ejer_5():
+    puntos=dataframe_numeros()
+    valores=[]
+    
+    for punto in puntos.itertuples():
+        if punto[1]>0 and punto[2]>0:
+            valores.append(True)
+        else:
+            valores.append(False)
+        
+    puntos.insert(loc=2,column="Primer_Cuadrante",value=valores)
+    print(puntos)
+
 def ejer_7():
-    palabras=ejer_6()
+    palabras=dataframe_palabras()
     frase="La palabra {} tiene {} letras, de las cuales {} son vocales y {} consonantes."
     for palabra in palabras.itertuples():
         print(frase.format(palabra[1],palabra[2],palabra[3],palabra[4]))
 
 def ejer_8():
-    palabras=ejer_6()
+    palabras=dataframe_palabras()
     print(palabras.loc[palabras["Consonantes"]==palabras["Vocales"]])
 
 def ejer_9():
-    fotocasa_df = pd.read_csv("https://drive.google.com/uc?export=view&id=1DwvALe87aeDzTk7s6xGPDd6itJ65s4YE", index_col = 0)
+    fotocasa_df = dataframe_pisos()
     print(np.shape(fotocasa_df))
-
-    print(fotocasa_df.info())
-
     print(fotocasa_df.describe())
+    for titulo in fotocasa_df.keys():
+        print(fotocasa_df[titulo].value_counts())    
 
+def ejer_10():
+    fotocasa_df = dataframe_pisos()
+    print(fotocasa_df.head())
 
+def ejer_11():
+    fotocasa_df = dataframe_pisos()
+    print(fotocasa_df.tail())
+    print(fotocasa_df[["Inmobiliaria","Tipo de inmueble"]].tail(3))
+
+def ejer_12():
+    fotocasa_df = dataframe_pisos()
+    a_borrar=["Domótica","Pista de Tenis","Alarma","Mascotas","Energía Solar","Gimnasio"]
+    fotocasa1_df=fotocasa_df.drop(a_borrar,axis=1)
+    #print(fotocasa1_df.info())
+    return fotocasa1_df
+
+def ejer_13():
+    fotocasa1_df = ejer_12()
+    fotocasa2_df = fotocasa1_df.rename(columns={"Tipo de inmueble":"Tipo"})
+    #print(fotocasa2_df.info())
+    return fotocasa2_df
+
+def ejer_14():
+    fotocasa2_df=ejer_13()
+    fotocasa3_df=fotocasa2_df.dropna(subset="Precio")
+    fotocasa3_df=fotocasa3_df[fotocasa3_df["Precio"]!="A consultar"]
+    print("hola:",fotocasa3_df.info())
 #ejer_1()
 #ejer_2()
 #ejer_3()
@@ -101,4 +132,9 @@ def ejer_9():
 #ejer_6()
 #ejer_7()
 #ejer_8()
-ejer_9()
+#ejer_9()
+#ejer_10()
+#ejer_11()
+#ejer_12()
+#ejer_13()
+ejer_14()
