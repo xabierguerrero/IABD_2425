@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib as plt
+import os
 
 #este es a su vez el ejercicio 1
 def dataframe_numeros():
@@ -122,8 +123,37 @@ def ejer_13():
 def ejer_14():
     fotocasa2_df=ejer_13()
     fotocasa3_df=fotocasa2_df.dropna(subset="Precio")
-    fotocasa3_df=fotocasa3_df[fotocasa3_df["Precio"]!="A consultar"]
-    print("hola:",fotocasa3_df.info())
+    fotocasa3_df = fotocasa3_df.drop(fotocasa3_df[fotocasa3_df['Precio'] == 'A consultar'].index)
+    print(fotocasa3_df.info())
+    return fotocasa3_df
+    
+def ejer_15():
+    fotocasa3_df = ejer_14()
+    fotocasa4_df=fotocasa3_df.astype({'Tipo':'category',
+                                      'Orientación':'category',
+                                      'Estado':'category',
+                                      'Parking':'category'})
+    #print(fotocasa4_df.info())
+    return fotocasa4_df
+
+def ejer_16():
+    # el enlace no va
+    #fichero ='https://raw.githubusercontent.com/ainaramu-icjardin/big_data/main/ciudades_ejemplo.csv'
+    fichero='./Recursos/ciudades_ejemplo.csv'
+    ciudades_df = pd.read_csv(fichero)
+    ciudades_df.to_excel("./Recursos/ciudades_ejemplo.xlsx")
+
+def ejer_17():
+    # el enlace no va
+    #fichero ='https://raw.githubusercontent.com/ainaramu-icjardin/big_data/main/parocomunidades.csv'
+    fichero='./Recursos/parocomunidades.csv'
+    paro_df = pd.read_csv(fichero,encoding='latin1')
+    print(paro_df.loc[paro_df["Periodo"]==2019])
+    print(paro_df.loc[paro_df["Total"]>15])
+    print(paro_df.loc[paro_df["Periodo"]==2019].loc[paro_df["Total"]>15])
+    
+
+
 #ejer_1()
 #ejer_2()
 #ejer_3()
@@ -137,4 +167,7 @@ def ejer_14():
 #ejer_11()
 #ejer_12()
 #ejer_13()
-ejer_14()
+#ejer_14()
+#ejer_15()
+#ejer_16()
+ejer_17()
