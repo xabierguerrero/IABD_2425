@@ -56,17 +56,17 @@ def dataframe_pisos():
 def ejer_2():
     puntos=dataframe_numeros()
     x_pos= puntos.loc[puntos["x"]>0] 
-    print(x_pos)       
+    return x_pos       
 
 def ejer_3():
     puntos=dataframe_numeros()
     y_pos= puntos.loc[puntos["y"]>0] 
-    print(y_pos)       
+    return y_pos       
 
 def ejer_4():
     puntos=dataframe_numeros()
     cuad_1= puntos.loc[puntos["y"]>0].loc[puntos["x"]>0]
-    print(cuad_1)       
+    return cuad_1      
 
 def ejer_5():
     puntos=dataframe_numeros()
@@ -79,52 +79,59 @@ def ejer_5():
             valores.append(False)
         
     puntos.insert(loc=2,column="Primer_Cuadrante",value=valores)
-    print(puntos)
+    return puntos
 
 def ejer_7():
     palabras=dataframe_palabras()
     frase="La palabra {} tiene {} letras, de las cuales {} son vocales y {} consonantes."
     for palabra in palabras.itertuples():
         print(frase.format(palabra[1],palabra[2],palabra[3],palabra[4]))
+    
+    return
 
 def ejer_8():
     palabras=dataframe_palabras()
     print(palabras.loc[palabras["Consonantes"]==palabras["Vocales"]])
+
+    return
 
 def ejer_9():
     fotocasa_df = dataframe_pisos()
     print(np.shape(fotocasa_df))
     print(fotocasa_df.describe())
     for titulo in fotocasa_df.keys():
-        print(fotocasa_df[titulo].value_counts())    
+        print(fotocasa_df[titulo].value_counts()) 
+
+    return   
 
 def ejer_10():
     fotocasa_df = dataframe_pisos()
     print(fotocasa_df.head())
+
+    return
 
 def ejer_11():
     fotocasa_df = dataframe_pisos()
     print(fotocasa_df.tail())
     print(fotocasa_df[["Inmobiliaria","Tipo de inmueble"]].tail(3))
 
+    return
+
 def ejer_12():
     fotocasa_df = dataframe_pisos()
     a_borrar=["Domótica","Pista de Tenis","Alarma","Mascotas","Energía Solar","Gimnasio"]
     fotocasa1_df=fotocasa_df.drop(a_borrar,axis=1)
-    #print(fotocasa1_df.info())
     return fotocasa1_df
 
 def ejer_13():
     fotocasa1_df = ejer_12()
     fotocasa2_df = fotocasa1_df.rename(columns={"Tipo de inmueble":"Tipo"})
-    #print(fotocasa2_df.info())
     return fotocasa2_df
 
 def ejer_14():
     fotocasa2_df=ejer_13()
     fotocasa3_df=fotocasa2_df.dropna(subset="Precio")
     fotocasa3_df = fotocasa3_df.drop(fotocasa3_df[fotocasa3_df['Precio'] == 'A consultar'].index)
-    print(fotocasa3_df.info())
     return fotocasa3_df
     
 def ejer_15():
@@ -133,7 +140,6 @@ def ejer_15():
                                       'Orientación':'category',
                                       'Estado':'category',
                                       'Parking':'category'})
-    #print(fotocasa4_df.info())
     return fotocasa4_df
 
 def ejer_16():
@@ -142,6 +148,8 @@ def ejer_16():
     fichero='./Recursos/ciudades_ejemplo.csv'
     ciudades_df = pd.read_csv(fichero)
     ciudades_df.to_excel("./Recursos/ciudades_ejemplo.xlsx")
+
+    return
 
 def ejer_17():
     # el enlace no va
@@ -152,22 +160,54 @@ def ejer_17():
     print(paro_df.loc[paro_df["Total"]>15])
     print(paro_df.loc[paro_df["Periodo"]==2019].loc[paro_df["Total"]>15])
     
+    return
 
-
-#ejer_1()
-#ejer_2()
-#ejer_3()
-#ejer_4()
-#ejer_5()
-#ejer_6()
-#ejer_7()
-#ejer_8()
-#ejer_9()
-#ejer_10()
-#ejer_11()
-#ejer_12()
-#ejer_13()
-#ejer_14()
-#ejer_15()
-#ejer_16()
-#ejer_17()
+salir=False
+while salir==False:
+    print("Introduce el número de ejercicio a revisar(1-17)[0 para salir]:")
+    ejer=int(input())
+    match ejer:
+        case 0:
+            salir=True
+        case 1:
+            print("Ejer1")
+            print(dataframe_numeros().info())
+            print(dataframe_numeros().describe())
+        case 2:
+            print(ejer_2())
+        case 3:
+            print(ejer_3())
+        case 4:
+            print(ejer_4())
+        case 5:
+            print(ejer_5())
+        case 6:
+            print(dataframe_palabras())
+        case 7:
+            ejer_7()
+        case 8:
+            ejer_8()
+        case 9:
+            ejer_9()
+        case 10:
+            ejer_10()
+        case 11:
+            ejer_11()
+        case 12:
+            print(ejer_12().info())
+            print(ejer_12().describe())
+        case 13:
+            print(ejer_13().info())
+            print(ejer_13().describe())
+        case 14:
+            print(ejer_14().info())
+            print(ejer_14().describe())
+        case 15:
+            print(ejer_15().info())
+            print(ejer_15().describe())
+        case 16:
+            ejer_16()
+        case 17:
+            ejer_17()
+        case _:
+            None

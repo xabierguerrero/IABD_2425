@@ -1,8 +1,6 @@
 import random
 import termcolor
 
-
-celdas_global=[['1','2','3'],['4','5','6'],['7','8','9']]
 POSICIONES=[['1','2','3'],['4','5','6'],['7','8','9']]
 
 JUGADOR="X"
@@ -11,7 +9,7 @@ MAQUINA="O"
 VICTORIA_JUGADOR=termcolor.colored(JUGADOR, 'red')
 VICTORIA_MAQUINA=termcolor.colored(MAQUINA, 'blue')
 
-CONS = [['1','2','3'],
+CONDS = [['1','2','3'],
         ['4','5','6'],
         ['7','8','9'],
         ['1','4','7'],
@@ -21,15 +19,12 @@ CONS = [['1','2','3'],
         ['3','5','7']]
 
 
-def turno():
-    moneda=["cara","cruz"]
-    lanzar=random.choice(moneda)
-    if lanzar=="cara":
-        return True
-    else:
-        
-        return False
+celdas_global=[['1','2','3'],['4','5','6'],['7','8','9']]
 
+
+def turno():
+    lanzar=random.choice([True,False])
+    return lanzar
 
 def dibujar_tablero():
     tablero="""
@@ -74,30 +69,21 @@ def mirar_ocupado(opciones):
 
 
 
-
-
-def gana_jugador():
-    celdas_jugador=mirar_ocupado(JUGADOR)
-    win_cons=CONS
+def gana(ganador):
+    win_cons=CONDS
+    if ganador==MAQUINA:
+        celdas=mirar_ocupado(MAQUINA)
+    else:
+        celdas=mirar_ocupado(JUGADOR)
     for con in win_cons:
-        if len(list(set(celdas_jugador).intersection(con)))==3:
+        if len(list(set(celdas).intersection(con)))==3:
             for x in range(3):
                 for y in range(3):
                     if POSICIONES[x][y] in con:
-                        celdas_global[x][y]=VICTORIA_JUGADOR
-            return True
-
-    return False
-
-def gana_maquina():
-    celdas_maquina=mirar_ocupado(MAQUINA)
-    win_cons=CONS
-    for con in win_cons:
-        if len(list(set(celdas_maquina).intersection(con)))==3:
-            for x in range(3):
-                for y in range(3):
-                    if POSICIONES[x][y] in con:
-                        celdas_global[x][y]=VICTORIA_MAQUINA
+                        if ganador==MAQUINA:
+                            celdas_global[x][y]=VICTORIA_MAQUINA
+                        else:
+                            celdas_global[x][y]=VICTORIA_JUGADOR
             return True
 
     return False
@@ -109,7 +95,7 @@ def check_con(win_loose):
         celdas=mirar_ocupado(MAQUINA)
     else: # False es buscar derrota
         celdas=mirar_ocupado(JUGADOR)
-    cons=CONS
+    cons=CONDS
     opciones=[]
     for con in cons:
         if len(list(set(celdas).intersection(con)))==2:
@@ -153,7 +139,7 @@ def jugada_optima():
                 # Sin condiciones de victoria ni derrota el centro siempre está libre
                 optimo='5'
             case 4: # Vamos segundos y es nuestro tercer turno
-                #el jugador no ha creado diagona XOX, con esquinas ya no es posible ganar con esquinas
+                #el jugador no ha creado diagona XOX, ya no es posible ganar con esquinas
                 optimo=random.choice(list(set(celdas_libres).intersection(aristas)))
             case _: # no hay caso con 3 casillas que no tenga win_cons ni loose_cons
                     # caso 2 y 1 se pueden resolver con azar
@@ -193,7 +179,7 @@ def turno_jugador():
     if empate():
         fin_partida()
 
-    if gana_maquina():
+    if gana(MAQUINA):
             print("Victoria de la Maquina.")
             fin_partida()
     else:
@@ -216,7 +202,7 @@ def turno_maquina():
     if empate():
         fin_partida()
 
-    if gana_jugador():
+    if gana(JUGADOR):
         print("Victoria del Jugador.")
         fin_partida()
     else:
@@ -234,12 +220,3 @@ def empate():
         return True
     else:
         return False
-
-#empeiza la partida
-
-if turno():
-    print("Cara. Empiezas tú")
-    turno_jugador()
-else:
-    print("Cruz. Empieza la maquina")
-    turno_maquina()
