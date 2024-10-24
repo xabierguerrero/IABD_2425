@@ -37,14 +37,19 @@ data["f(x)_3"]=recorrido
 recorrido=[]
 
 funciones=pd.DataFrame(data=data)
+plt.figure(figsize=[10,5])
+
+plt.subplot(3,1,1)
+plt.ylabel("sin(x)/x")
+sns.lineplot(data = funciones, x = "x", y = "f(x)_1", color = "#f06741")
+
+plt.subplot(3,1,2)
+plt.ylabel("2sin(x)/x")
+sns.lineplot(data = funciones, x = "x", y = "f(x)_2", color = "#a4f041")
+
+plt.subplot(3,1,3)
+plt.ylabel("-sin(x)/x")
+sns.lineplot(data = funciones, x = "x", y = "f(x)_3", color = "#8d41f0")
 
 
-plt.figure(figsize=[8,6])
-sns.lineplot(data = funciones, x = "x", y = "f(x)_1", color = "#f06741",label="sin(x)/x")
-sns.lineplot(data = funciones, x = "x", y = "f(x)_2", color = "#a4f041",label="2sin(x)/x")
-sns.lineplot(data = funciones, x = "x", y = "f(x)_3", color = "#8d41f0",label="-sin(x)/x")
-plt.legend(title="Funciones")
-plt.ylabel("f(x)")
 plt.show()
-
-
