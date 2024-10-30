@@ -18,8 +18,7 @@ node_weights=[
         len(G.edges('c'))*mult,
         len(G.edges('d'))*mult,
         len(G.edges('e'))*mult]
-
-
+widths = nx.get_edge_attributes(G, 'weight')
 
 plt.figure(figsize=(8,6))
 nx.draw(G,with_labels=True,
@@ -27,7 +26,9 @@ nx.draw(G,with_labels=True,
         font_weight='bold',
         node_color=node_color,
         edge_color=edge_color,
-        node_size=node_weights)
+        node_size=node_weights,
+        edgelist=widths.keys(),
+        width=list(widths.values()))
 
 plt.show()
 
