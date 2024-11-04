@@ -1,10 +1,7 @@
 import matplotlib.pyplot as plt
-import numpy as np
-import datetime as dt
 import seaborn as sns
-import networkx as nx
-import pandas as pd
 
 data=[9, 12, 6, 11, 19, 5, 8, 13, 2, 8, 5, 12, 0, 9, 4, 15, 18, 10, 6, 16]
-data.sort()
-print(data)
+style = {'facecolor': 'blue', 'edgecolor': '#000000', 'linewidth': 1}
+sns.histplot(data=data,bins=[0,5,10,15,20],**style).set_xticks([0,5,10,15,20])
+plt.show()
