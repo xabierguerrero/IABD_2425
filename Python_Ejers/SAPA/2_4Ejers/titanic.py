@@ -108,7 +108,7 @@ new_titanic_df  = load_titanic_data()
 
 """
 Si los datos vinieran en un CSV con todo bien tal y como nos pides 
-este bloque de limpiar y ajustar datosno seria necesario. Pero no es el caso.
+este bloque de limpiar y ajustar datos no seria necesario. Pero no es el caso.
 """
 
 # borramos datos excedentes
