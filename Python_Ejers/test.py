@@ -1,6 +1,20 @@
+#! /usr/bin/python3
 import pandas as pd
-import numpy as np
+import seaborn as sns
+from hdfs import InsecureClient
+import io
 
-pokemon_bw_data="./Python_Ejers/pokemon_bw.csv"
-pokemon_bw_df = pd.read_csv(pokemon_bw_data)
-print(pokemon_bw_df.head(9))
+df_titanic = sns.load_dataset('titanic')
+
+url = "http://master:9870"
+usuario = "ubuntu"
+client = InsecureClient(url, usuario)
+fichero = "/practicas/titanic.csv"
+
+
+buffer=io.StringIO()
+df_titanic.to_csv(buffer,index=False)
+
+with client.write(fichero, encoding='utf-8') as writer:
+        writer.write(buffer.getvalue())
+
