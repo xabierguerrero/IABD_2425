@@ -29,8 +29,13 @@ def cargar_modelo():
     except:
         print("ERROR: Modelo no encontrado.")
 
+
 try:
     datos = pedir_datos()
+except:
+    print("ERROR. Por favor revise que los datos introducidos son correctos.")
+try:
+    
     modelo = cargar_modelo()
         
     columnas_esperadas = ['int.rate', 'installment', 'fico', 'revol.bal', 'revol.util', 'inq.last.6mths', 'pub.rec', 'purpose', 'credit.policy']
