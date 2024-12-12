@@ -1,0 +1,12 @@
+try:
+    divisor= int(input("Introduzca el divisor:"))
+except:
+    print("ERROR. Valor no valido introducido, asegurese de que intruduce un número entero.")
+    exit()
+
+if divisor==0:
+    print("ERROR. 0 no es un divisor válido.")
+    exit()
+
+x = 2/divisor
+print("Division realizada con éxito. Resultado:",x)
